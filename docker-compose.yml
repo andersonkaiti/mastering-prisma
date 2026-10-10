@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: prismadb
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: prismadb
+    ports:
+    - "5432:5432"
