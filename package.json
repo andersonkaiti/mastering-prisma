@@ -1,9 +1,9 @@
 {
   "name": "mastering-prisma",
   "type": "module",
-  "main": "src/main.ts",
+  "main": "src/infra/http/server.ts",
   "scripts": {
-    "dev": "tsx watch .",
+    "dev": "tsx watch --env-file=.env .",
     "prepare": "husky"
   },
   "devEngines": {
@@ -30,7 +30,10 @@
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "dotenv": "^18.0.7",
-    "pg": "^8.23.1"
+    "fastify": "^5.12.5",
+    "fastify-type-provider-zod": "^7.0.0",
+    "pg": "^8.23.1",
+    "zod": "^4.6.5"
   },
   "commitlint": {
     "extends": [

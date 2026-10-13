@@ -9,6 +9,17 @@
     "types": ["node"],
 
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+
+    "paths": {
+      "@/*": ["./src/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@application/*": ["./src/application/*"],
+      "@infra/*": ["./src/infra/*"],
+      "@shared/*": ["./src/shared/*"]
+    }
   }
 }
