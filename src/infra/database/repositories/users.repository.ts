@@ -11,4 +11,11 @@ export class UsersRepository implements IUsersRepository {
       },
     })
   }
+
+  async createMany(users: IUser[]): Promise<IUser[]> {
+    return await prisma.user.createManyAndReturn({
+      data: users,
+      skipDuplicates: true,
+    })
+  }
 }
