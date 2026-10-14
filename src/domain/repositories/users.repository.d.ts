@@ -1,6 +1,9 @@
 import type { IUser } from '@domain/entities/user.entity.ts'
 
+export interface ICreateUserDTO
+  extends Omit<IUser, 'id' | 'birthdate' | 'isActive'> {}
+
 export interface IUsersRepository {
-  create(user: IUser): Promise<IUser>
-  createMany(users: IUser[]): Promise<IUser[]>
+  create(user: ICreateUserDTO): Promise<IUser>
+  createMany(users: ICreateUserDTO[]): Promise<IUser[]>
 }

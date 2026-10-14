@@ -1,9 +1,12 @@
 import type { IUser } from '@domain/entities/user.entity.ts'
-import type { IUsersRepository } from '@domain/repositories/users.repository.d.ts'
+import type {
+  ICreateUserDTO,
+  IUsersRepository,
+} from '@domain/repositories/users.repository.d.ts'
 import { prisma } from '@infra/database/prisma/index.ts'
 
 export class UsersRepository implements IUsersRepository {
-  async create({ name, email }: IUser): Promise<IUser> {
+  async create({ name, email }: ICreateUserDTO): Promise<IUser> {
     return await prisma.user.create({
       data: {
         name,
@@ -12,7 +15,7 @@ export class UsersRepository implements IUsersRepository {
     })
   }
 
-  async createMany(users: IUser[]): Promise<IUser[]> {
+  async createMany(users: ICreateUserDTO[]): Promise<IUser[]> {
     return await prisma.user.createManyAndReturn({
       data: users,
       skipDuplicates: true,

@@ -18,7 +18,7 @@ export async function createUserRoute(app: FastifyInstance) {
           name: z.string(),
           email: z.string(),
           birthdate: z.date().nullable(),
-          isActive: z.boolean().nullable(),
+          isActive: z.boolean(),
         }),
       },
     },

@@ -8,10 +8,12 @@ interface IInputDTO {
   }[]
 }
 
+interface IOutputDTO extends Array<IUser> {}
+
 export class BatchCreateUsersUseCase {
   constructor(private readonly usersRepository: IUsersRepository) {}
 
-  async execute({ users }: IInputDTO): Promise<IUser[]> {
+  async execute({ users }: IInputDTO): Promise<IOutputDTO> {
     return await this.usersRepository.createMany(users)
   }
 }

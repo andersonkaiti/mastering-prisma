@@ -6,10 +6,12 @@ interface IInputDTO {
   email: string
 }
 
+interface IOutputDTO extends IUser {}
+
 export class CreateUserUseCase {
   constructor(private readonly usersRepository: IUsersRepository) {}
 
-  async execute({ name, email }: IInputDTO): Promise<IUser> {
+  async execute({ name, email }: IInputDTO): Promise<IOutputDTO> {
     return await this.usersRepository.create({
       name,
       email,
