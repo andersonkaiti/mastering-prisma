@@ -21,4 +21,15 @@ export class UsersRepository implements IUsersRepository {
       skipDuplicates: true,
     })
   }
+
+  async findMany(): Promise<IUser[]> {
+    return await prisma.user.findMany({
+      orderBy: {
+        email: {
+          sort: 'asc',
+          nulls: 'first',
+        },
+      },
+    })
+  }
 }

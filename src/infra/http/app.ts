@@ -6,6 +6,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { batchCreateUsersRoute } from './routes/batch-create-users.route.ts'
 import { createUserRoute } from './routes/create-user.route.ts'
+import { getUsersRoute } from './routes/get-users.route.ts'
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -13,5 +14,7 @@ app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
 app.get('/health', () => ({ status: 'ok' }))
+
 app.register(createUserRoute)
 app.register(batchCreateUsersRoute)
+app.register(getUsersRoute)

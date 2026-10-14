@@ -6,4 +6,5 @@ export interface ICreateUserDTO
 export interface IUsersRepository {
   create(user: ICreateUserDTO): Promise<IUser>
   createMany(users: ICreateUserDTO[]): Promise<IUser[]>
+  findMany(): Promise<IUser[]>
 }
