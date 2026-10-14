@@ -7,4 +7,5 @@ export interface IUsersRepository {
   create(user: ICreateUserDTO): Promise<IUser>
   createMany(users: ICreateUserDTO[]): Promise<IUser[]>
   findMany(): Promise<IUser[]>
+  findOne(id: IUser['id']): Promise<IUser | null>
 }

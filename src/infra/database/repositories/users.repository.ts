@@ -32,4 +32,12 @@ export class UsersRepository implements IUsersRepository {
       },
     })
   }
+
+  async findOne(id: IUser['id']): Promise<IUser | null> {
+    return await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })
+  }
 }
