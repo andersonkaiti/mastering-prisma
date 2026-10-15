@@ -5,6 +5,11 @@ export interface ICreateUserDTO
 
 export interface IUpdateUserDTO extends Omit<Partial<IUser>, 'id'> {}
 
+export interface IUpsertUserDTO extends Partial<IUser> {
+  name: string
+  email: string
+}
+
 export interface IGetStatsResponse {
   totalUsers: number
   totalEmails: number
@@ -19,4 +24,5 @@ export interface IUsersRepository {
   findOne(id: IUser['id']): Promise<IUser | null>
   getStats(): Promise<IGetStatsResponse>
   update(id: IUser['id'], user: IUpdateUserDTO): Promise<IUser>
+  upsert(user: IUpsertUserDTO): Promise<IUser>
 }

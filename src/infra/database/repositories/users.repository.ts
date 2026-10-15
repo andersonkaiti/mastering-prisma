@@ -3,6 +3,7 @@ import type {
   ICreateUserDTO,
   IGetStatsResponse,
   IUpdateUserDTO,
+  IUpsertUserDTO,
   IUsersRepository,
 } from '@domain/repositories/users.repository.d.ts'
 import { prisma } from '@infra/database/prisma/index.ts'
@@ -79,6 +80,16 @@ export class UsersRepository implements IUsersRepository {
       data: user,
       where: {
         id,
+      },
+    })
+  }
+
+  async upsert(user: IUpsertUserDTO): Promise<IUser> {
+    return await prisma.user.upsert({
+      create: user,
+      update: user,
+      where: {
+        email: user.email,
       },
     })
   }
