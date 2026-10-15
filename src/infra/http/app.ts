@@ -6,6 +6,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { batchCreateUsersRoute } from './routes/batch-create-users.route.ts'
 import { createUserRoute } from './routes/create-user.route.ts'
+import { deleteUserRoute } from './routes/delete-user.route.ts'
 import { getStatsRoute } from './routes/get-stats.route.ts'
 import { getUserRoute } from './routes/get-user.route.ts'
 import { getUsersRoute } from './routes/get-users.route.ts'
@@ -26,3 +27,4 @@ app.register(getUserRoute)
 app.register(getStatsRoute)
 app.register(updateUserRoute)
 app.register(upsertUserRoute)
+app.register(deleteUserRoute)

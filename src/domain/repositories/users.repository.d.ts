@@ -25,4 +25,5 @@ export interface IUsersRepository {
   getStats(): Promise<IGetStatsResponse>
   update(id: IUser['id'], user: IUpdateUserDTO): Promise<IUser>
   upsert(user: IUpsertUserDTO): Promise<IUser>
+  delete(id: IUser['id']): Promise<IUser>
 }
