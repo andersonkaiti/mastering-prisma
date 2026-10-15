@@ -3,7 +3,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { makeGetStatsUseCase } from '../factories/get-stats-use-case.factory.ts'
 
-export async function getStats(app: FastifyInstance) {
+export async function getStatsRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().route({
     url: '/stats',
     method: 'GET',
