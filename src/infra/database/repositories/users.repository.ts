@@ -2,11 +2,13 @@ import type { IUser } from '@domain/entities/user.entity.ts'
 import type {
   ICreateUserDTO,
   IGetStatsResponse,
+  ITransactionResponse,
   IUpdateUserDTO,
   IUpsertUserDTO,
   IUsersRepository,
 } from '@domain/repositories/users.repository.d.ts'
 import { prisma } from '@infra/database/prisma/index.ts'
+import { makeUser } from '@shared/utils/make-user.ts'
 
 export class UsersRepository implements IUsersRepository {
   async create({ name, email }: ICreateUserDTO): Promise<IUser> {
@@ -111,5 +113,42 @@ export class UsersRepository implements IUsersRepository {
         id,
       },
     })
+  }
+
+  async transaction(): Promise<ITransactionResponse> {
+    const user = makeUser()
+
+    // const users = await prisma.$transaction([
+    //   prisma.user.create({
+    //     data: user,
+    //   }),
+    //   prisma.user.create({
+    //     data: makeUser(),
+    //   }),
+    //   prisma.user.create({
+    //     data: user,
+    //   }),
+    // ])
+
+    const users = await prisma.$transaction(async (tx) => {
+      // Every query inside the callback must use `tx`, never the shared
+      // `prisma` singleton — otherwise it runs outside the transaction and
+      // won't be rolled back if a later step fails.
+      const userOne = await tx.user.create({
+        data: user,
+      })
+
+      const userTwo = await tx.user.create({
+        data: makeUser(),
+      })
+
+      const userThree = await tx.user.create({
+        data: user,
+      })
+
+      return [userOne, userTwo, userThree]
+    })
+
+    return users
   }
 }

@@ -10,6 +10,7 @@ import { deleteUserRoute } from './routes/delete-user.route.ts'
 import { getStatsRoute } from './routes/get-stats.route.ts'
 import { getUserRoute } from './routes/get-user.route.ts'
 import { getUsersRoute } from './routes/get-users.route.ts'
+import { transactionsRoute } from './routes/transactions.route.ts'
 import { updateUserRoute } from './routes/update-user.route.ts'
 import { upsertUserRoute } from './routes/upsert-user.route.ts'
 
@@ -28,3 +29,4 @@ app.register(getStatsRoute)
 app.register(updateUserRoute)
 app.register(upsertUserRoute)
 app.register(deleteUserRoute)
+app.register(transactionsRoute)

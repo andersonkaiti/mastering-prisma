@@ -17,6 +17,8 @@ export interface IGetStatsResponse {
   youngerBirthdate: Date | null
 }
 
+export interface ITransactionResponse extends Array<IUser> {}
+
 export interface IUsersRepository {
   create(user: ICreateUserDTO): Promise<IUser>
   createMany(users: ICreateUserDTO[]): Promise<IUser[]>
@@ -26,4 +28,5 @@ export interface IUsersRepository {
   update(id: IUser['id'], user: IUpdateUserDTO): Promise<IUser>
   upsert(user: IUpsertUserDTO): Promise<IUser>
   delete(id: IUser['id']): Promise<IUser>
+  transaction(): Promise<ITransactionResponse>
 }
