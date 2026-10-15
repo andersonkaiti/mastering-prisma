@@ -39,11 +39,20 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findOne(id: IUser['id']): Promise<IUser | null> {
-    return await prisma.user.findUnique({
-      where: {
+    const [user] = await prisma.$queryRaw<IUser[]>`
+      SELECT
         id,
-      },
-    })
+        name,
+        email,
+        birthdate,
+        is_active "isActive"
+      FROM
+        users
+      WHERE
+        id = ${id}
+    `
+
+    return user ?? null
   }
 
   async getStats(): Promise<IGetStatsResponse> {
