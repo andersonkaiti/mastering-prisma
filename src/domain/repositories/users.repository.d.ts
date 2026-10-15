@@ -3,6 +3,8 @@ import type { IUser } from '@domain/entities/user.entity.ts'
 export interface ICreateUserDTO
   extends Omit<IUser, 'id' | 'birthdate' | 'isActive'> {}
 
+export interface IUpdateUserDTO extends Omit<Partial<IUser>, 'id'> {}
+
 export interface IGetStatsResponse {
   totalUsers: number
   totalEmails: number
@@ -16,4 +18,5 @@ export interface IUsersRepository {
   findMany(): Promise<IUser[]>
   findOne(id: IUser['id']): Promise<IUser | null>
   getStats(): Promise<IGetStatsResponse>
+  update(id: IUser['id'], user: IUpdateUserDTO): Promise<IUser>
 }

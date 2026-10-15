@@ -2,6 +2,7 @@ import type { IUser } from '@domain/entities/user.entity.ts'
 import type {
   ICreateUserDTO,
   IGetStatsResponse,
+  IUpdateUserDTO,
   IUsersRepository,
 } from '@domain/repositories/users.repository.d.ts'
 import { prisma } from '@infra/database/prisma/index.ts'
@@ -71,5 +72,14 @@ export class UsersRepository implements IUsersRepository {
       oldestBirthdate,
       youngerBirthdate,
     }
+  }
+
+  async update(id: IUser['id'], user: IUpdateUserDTO): Promise<IUser> {
+    return await prisma.user.update({
+      data: user,
+      where: {
+        id,
+      },
+    })
   }
 }
