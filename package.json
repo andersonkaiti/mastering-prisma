@@ -4,6 +4,7 @@
   "main": "src/infra/http/server.ts",
   "scripts": {
     "dev": "tsx watch --env-file=.env .",
+    "db:seed": "prisma db seed",
     "prepare": "husky"
   },
   "devEngines": {
@@ -17,6 +18,7 @@
     "@biomejs/biome": "2.5.15",
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
+    "@faker-js/faker": "^10.6.0",
     "@types/node": "^26.6.5",
     "@types/pg": "^8.23.1",
     "commitlint-config-gitmoji": "^2.3.1",
