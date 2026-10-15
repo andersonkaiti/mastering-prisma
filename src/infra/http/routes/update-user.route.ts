@@ -14,7 +14,7 @@ export async function updateUserRoute(app: FastifyInstance) {
       body: z.object({
         name: z.string().optional(),
         email: z.string().optional(),
-        birthdate: z.date().optional(),
+        birthdate: z.coerce.date().optional(),
         isActive: z.boolean().optional(),
       }),
       response: {
