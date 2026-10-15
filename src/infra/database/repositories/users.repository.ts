@@ -26,14 +26,16 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findMany(): Promise<IUser[]> {
-    return await prisma.user.findMany({
-      orderBy: {
-        email: {
-          sort: 'asc',
-          nulls: 'first',
-        },
-      },
-    })
+    return await prisma.$queryRaw<IUser[]>`
+      SELECT
+        id,
+        name,
+        email,
+        birthdate,
+        is_active "isActive"
+      FROM
+        users
+      `
   }
 
   async findOne(id: IUser['id']): Promise<IUser | null> {
