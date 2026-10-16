@@ -1,3 +1,5 @@
+import { makeOrder } from '@shared/utils/make-order.ts'
+import { makeProfile } from '@shared/utils/make-profile.ts'
 import { makeUser } from '@shared/utils/make-user.ts'
 import { prisma } from './index.ts'
 
@@ -8,9 +10,21 @@ try {
 
   await prisma.user.deleteMany()
 
-  await prisma.user.createMany({
-    data: Array.from({ length: USERS_COUNT }, (_) => makeUser()),
-  })
+  await Promise.all(
+    Array.from({ length: USERS_COUNT }, () =>
+      prisma.user.create({
+        data: {
+          ...makeUser(),
+          profile: {
+            create: makeProfile(),
+          },
+          orders: {
+            create: makeOrder(),
+          },
+        },
+      }),
+    ),
+  )
 
   const count = await prisma.user.count()
 
