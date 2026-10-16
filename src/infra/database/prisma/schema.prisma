@@ -14,6 +14,31 @@ model User {
   birthdate DateTime?
   isActive  Boolean   @default(true) @map("is_active")
 
+  profile Profile?
+  orders  Order[]
+
   @@index([name])
   @@map("users")
+}
+
+model Profile {
+  id        String  @id @default(uuid())
+  userId    String  @unique @map("user_id")
+  instagram String?
+  github    String?
+  bio       String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("profiles")
+}
+
+model Order {
+  id     String @id @default(uuid())
+  userId String @unique @map("user_id")
+  value  Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("orders")
 }
