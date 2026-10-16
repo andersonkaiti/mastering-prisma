@@ -16,6 +16,22 @@ export async function getUsersRoute(app: FastifyInstance) {
             email: z.string().nullable(),
             birthdate: z.date().nullable(),
             isActive: z.boolean(),
+            profile: z
+              .object({
+                id: z.string().nullable(),
+                userId: z.string().nullable(),
+                instagram: z.string().nullable(),
+                github: z.string().nullable(),
+                bio: z.string().nullable(),
+              })
+              .nullable(),
+            orders: z.array(
+              z.object({
+                id: z.string(),
+                userId: z.string(),
+                value: z.number(),
+              }),
+            ),
           }),
         ),
       },

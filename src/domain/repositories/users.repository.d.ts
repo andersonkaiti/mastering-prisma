@@ -1,3 +1,5 @@
+import type { IOrder } from '@domain/entities/order.entity.ts'
+import type { IProfile } from '@domain/entities/profile.entity.ts'
 import type { IUser } from '@domain/entities/user.entity.ts'
 
 export interface ICreateUserDTO
@@ -17,12 +19,15 @@ export interface IGetStatsResponse {
   youngerBirthdate: Date | null
 }
 
+export interface IFindManyResponse
+  extends Array<IUser & { profile: IProfile | null; orders: IOrder[] }> {}
+
 export interface ITransactionResponse extends Array<IUser> {}
 
 export interface IUsersRepository {
   create(user: ICreateUserDTO): Promise<IUser>
   createMany(users: ICreateUserDTO[]): Promise<IUser[]>
-  findMany(): Promise<IUser[]>
+  findMany(): Promise<IFindManyResponse>
   findOne(id: IUser['id']): Promise<IUser | null>
   getStats(): Promise<IGetStatsResponse>
   update(id: IUser['id'], user: IUpdateUserDTO): Promise<IUser>

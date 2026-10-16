@@ -1,6 +1,7 @@
 import type { IUser } from '@domain/entities/user.entity.ts'
 import type {
   ICreateUserDTO,
+  IFindManyResponse,
   IGetStatsResponse,
   ITransactionResponse,
   IUpdateUserDTO,
@@ -27,17 +28,13 @@ export class UsersRepository implements IUsersRepository {
     })
   }
 
-  async findMany(): Promise<IUser[]> {
-    return await prisma.$queryRaw<IUser[]>`
-      SELECT
-        id,
-        name,
-        email,
-        birthdate,
-        is_active "isActive"
-      FROM
-        users
-      `
+  async findMany(): Promise<IFindManyResponse> {
+    return await prisma.user.findMany({
+      include: {
+        profile: true,
+        orders: true,
+      },
+    })
   }
 
   async findOne(id: IUser['id']): Promise<IUser | null> {
@@ -118,22 +115,7 @@ export class UsersRepository implements IUsersRepository {
   async transaction(): Promise<ITransactionResponse> {
     const user = makeUser()
 
-    // const users = await prisma.$transaction([
-    //   prisma.user.create({
-    //     data: user,
-    //   }),
-    //   prisma.user.create({
-    //     data: makeUser(),
-    //   }),
-    //   prisma.user.create({
-    //     data: user,
-    //   }),
-    // ])
-
     const users = await prisma.$transaction(async (tx) => {
-      // Every query inside the callback must use `tx`, never the shared
-      // `prisma` singleton — otherwise it runs outside the transaction and
-      // won't be rolled back if a later step fails.
       const userOne = await tx.user.create({
         data: user,
       })
