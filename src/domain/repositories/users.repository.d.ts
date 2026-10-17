@@ -1,6 +1,4 @@
-import type { IOrder } from '@domain/entities/order.entity.ts'
-import type { IProfile } from '@domain/entities/profile.entity.ts'
-import type { IUser } from '@domain/entities/user.entity.ts'
+import type { IUser, IUserWithRelations } from '@domain/entities/user.entity.ts'
 
 export interface ICreateUserDTO
   extends Omit<IUser, 'id' | 'birthdate' | 'isActive'> {}
@@ -19,8 +17,7 @@ export interface IGetStatsResponse {
   youngerBirthdate: Date | null
 }
 
-export interface IFindManyResponse
-  extends Array<IUser & { profile: IProfile | null; orders: IOrder[] }> {}
+export interface IFindManyResponse extends Array<IUserWithRelations> {}
 
 export interface ITransactionResponse extends Array<IUser> {}
 

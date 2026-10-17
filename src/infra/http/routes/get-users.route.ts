@@ -30,6 +30,12 @@ export async function getUsersRoute(app: FastifyInstance) {
                 id: z.string(),
                 userId: z.string(),
                 value: z.number(),
+                products: z.array(
+                  z.object({
+                    id: z.uuid(),
+                    name: z.string(),
+                  }),
+                ),
               }),
             ),
           }),
