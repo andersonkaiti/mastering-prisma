@@ -22,7 +22,7 @@ try {
     ),
   )
 
-  await Promise.all(
+  const users = await Promise.all(
     Array.from({ length: USERS_COUNT }, () =>
       prisma.user.create({
         data: {
@@ -34,9 +34,14 @@ try {
             create: {
               ...makeOrder(),
               products: {
-                connect: faker.helpers
+                create: faker.helpers
                   .arrayElements(products, { min: 1, max: 5 })
-                  .map((product) => ({ id: product.id })),
+                  .map((product) => ({
+                    quantity: faker.number.int({ min: 1, max: 10 }),
+                    product: {
+                      connect: { id: product.id },
+                    },
+                  })),
               },
             },
           },
@@ -44,6 +49,34 @@ try {
       }),
     ),
   )
+
+  const affiliations = users.flatMap((user, index) => {
+    const possibleAffiliates = users.slice(0, index)
+
+    if (possibleAffiliates.length === 0) {
+      return []
+    }
+
+    const affiliated = faker.helpers.maybe(
+      () => faker.helpers.arrayElement(possibleAffiliates),
+      { probability: 0.6 },
+    )
+
+    if (!affiliated) {
+      return []
+    }
+
+    return prisma.user.update({
+      where: { id: user.id },
+      data: {
+        affiliated: {
+          connect: { id: affiliated.id },
+        },
+      },
+    })
+  })
+
+  await Promise.all(affiliations)
 
   const [usersCount, productsCount] = await Promise.all([
     prisma.user.count(),

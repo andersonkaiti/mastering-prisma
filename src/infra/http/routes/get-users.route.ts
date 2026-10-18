@@ -11,15 +11,16 @@ export async function getUsersRoute(app: FastifyInstance) {
       response: {
         200: z.array(
           z.object({
-            id: z.string(),
+            id: z.uuid(),
             name: z.string(),
             email: z.string().nullable(),
             birthdate: z.date().nullable(),
             isActive: z.boolean(),
+            affiliationId: z.uuid().nullable(),
             profile: z
               .object({
-                id: z.string().nullable(),
-                userId: z.string().nullable(),
+                id: z.uuid().nullable(),
+                userId: z.uuid().nullable(),
                 instagram: z.string().nullable(),
                 github: z.string().nullable(),
                 bio: z.string().nullable(),
@@ -27,15 +28,39 @@ export async function getUsersRoute(app: FastifyInstance) {
               .nullable(),
             orders: z.array(
               z.object({
-                id: z.string(),
-                userId: z.string(),
+                id: z.uuid(),
+                userId: z.uuid(),
                 value: z.number(),
                 products: z.array(
                   z.object({
-                    id: z.uuid(),
-                    name: z.string(),
+                    orderId: z.uuid(),
+                    productId: z.uuid(),
+                    quantity: z.number(),
+                    product: z.object({
+                      id: z.uuid(),
+                      name: z.string(),
+                    }),
                   }),
                 ),
+              }),
+            ),
+            affiliated: z
+              .object({
+                id: z.uuid(),
+                name: z.string(),
+                email: z.string().nullable(),
+                birthdate: z.date().nullable(),
+                isActive: z.boolean(),
+              })
+              .nullable(),
+            affiliations: z.array(
+              z.object({
+                id: z.uuid(),
+                name: z.string(),
+                email: z.string().nullable(),
+                birthdate: z.date().nullable(),
+                isActive: z.boolean(),
+                affiliationId: z.uuid().nullable(),
               }),
             ),
           }),

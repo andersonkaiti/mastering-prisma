@@ -32,9 +32,15 @@ export class UsersRepository implements IUsersRepository {
     return await prisma.user.findMany({
       include: {
         profile: true,
+        affiliated: true,
+        affiliations: true,
         orders: {
           include: {
-            products: true,
+            products: {
+              include: {
+                product: true,
+              },
+            },
           },
         },
       },

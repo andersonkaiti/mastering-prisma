@@ -7,9 +7,12 @@ export interface IUser {
   email: string | null
   birthdate: Date | null
   isActive: boolean
+  affiliationId: string | null
 }
 
 export interface IUserWithRelations extends IUser {
   profile: IProfile | null
   orders: IOrderWithProducts[]
+  affiliated: IUser | null
+  affiliations: IUser[]
 }
