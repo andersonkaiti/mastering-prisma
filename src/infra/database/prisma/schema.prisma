@@ -39,17 +39,29 @@ model Order {
   value  Int
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  
-  products Product[]
+
+  products OrderProduct[]
 
   @@map("orders")
 }
 
 model Product {
-  id String @id @default(uuid())
+  id   String @id @default(uuid())
   name String
 
-  orders Order[]
+  orders OrderProduct[]
 
   @@map("products")
+}
+
+model OrderProduct {
+  orderId   String
+  productId String
+  quantity  Int
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@id([orderId, productId])
+  @@map("orders_products")
 }
