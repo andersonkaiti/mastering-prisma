@@ -6,6 +6,13 @@ export interface IOrder {
   value: number
 }
 
+export interface IOrderProduct {
+  orderId: string
+  productId: string
+  quantity: number
+  product: IProduct
+}
+
 export interface IOrderWithProducts extends IOrder {
-  products: IProduct[]
+  products: IOrderProduct[]
 }

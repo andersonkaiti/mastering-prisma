@@ -1,7 +1,7 @@
 import type { IUser, IUserWithRelations } from '@domain/entities/user.entity.ts'
 
 export interface ICreateUserDTO
-  extends Omit<IUser, 'id' | 'birthdate' | 'isActive'> {}
+  extends Omit<IUser, 'id' | 'birthdate' | 'isActive' | 'affiliationId'> {}
 
 export interface IUpdateUserDTO extends Omit<Partial<IUser>, 'id'> {}
 
